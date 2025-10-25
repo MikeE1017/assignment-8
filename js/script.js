@@ -30,4 +30,30 @@ document.getElementById("show-result").addEventListener("click", () => {
   const maxScore = Math.max(...Object.values(scores));
   const role = Object.keys(scores).find(key => scores[key] === maxScore);
 
+  let roleName = "";
+  let roleDesc = "";
+
+  switch (role) {
+    case "A":
+      roleName = "Security Analyst";
+      roleDesc = "You have a sharp eye for detail and a love for solving complex problems. Analysts monitor systems, identify threats, and keep data safe.";
+      break;
+    case "P":
+      roleName = "Security Engineer / Penetration Tester";
+      roleDesc = "You're a builder and problem-solver who loves to test limits. Engineers and pentesters strengthen defenses and find vulnerabilities before attackers do.";
+      break;
+    case "R":
+      roleName = "Incident Responder";
+      roleDesc = "You thrive in high-pressure situations. Responders act fast when security incidents happen, investigating and neutralizing threats.";
+      break;
+    case "F":
+      roleName = "Cybersecurity Policy & Compliance Specialist";
+      roleDesc = "You value structure and integrity. Compliance specialists develop and enforce security policies to ensure organizations stay safe and legal.";
+      break;
+  }
+
+  const resultContainer = document.getElementById("result-container");
+  document.getElementById("result-text").innerHTML = `<strong>${roleName}</strong><br>${roleDesc}`;
+  resultContainer.style.display = "block";
+
 });
