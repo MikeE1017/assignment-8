@@ -11,3 +11,20 @@
   transform: scale(1.01);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
+body {
+  background: linear-gradient(135deg, #0a0f24, #1b2a49);
+  color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.card {
+  background-color: #2c3e50;
+  color: #f8f9fa;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn {
+  border-radius: 8px;
+}
