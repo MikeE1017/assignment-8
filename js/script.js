@@ -81,7 +81,33 @@ function displayResult() {
   const role = roles[highest];
   resultText.innerHTML = `<strong>${role.title}</strong><br>${role.description}`;
   resultContainer.style.display = "block";
+  }
+
+  // Reset quiz function
+function resetQuiz() {
+  // Clear stored answers
+  for (let key in userAnswers) {
+    delete userAnswers[key];
+  }
+
+  // Remove selected styles from buttons
+  const buttons = document.querySelectorAll(".answer-btn");
+  buttons.forEach(button => {
+    button.classList.remove("btn-primary");
+    button.classList.add("btn-outline-primary");
+  });
+
+  // Hide result section again
+  const resultContainer = document.getElementById("result-container");
+  const resultText = document.getElementById("result-text");
+
+  resultText.textContent = "";
+  resultContainer.style.display = "none";
+
+  console.log("Quiz reset complete.");
 }
 
+// Add event listener for Reset button
+document.getElementById("reset-quiz").addEventListener("click", resetQuiz);
 // Attach event listener to the “Show Results” button
 document.getElementById("show-result").addEventListener("click", displayResult);
