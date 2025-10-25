@@ -1,59 +1,87 @@
 console.log("script.js connected!");
 
-//Track responses
-const scores = {A: 0, P: 0, R: 0, F: 0 };
+// Object to track selected answers
+const userAnswers = {};
 
-//Handle button clicks
-document.querySelectorAll(".answer-btn".forEach(button => {
+// Select all question blocks
+const questionBlocks = document.querySelectorAll(".question-block");
+
+// For each question block, add event listeners to answer buttons
+questionBlocks.forEach((block, index) => {
+  const buttons = block.querySelectorAll(".answer-btn");
+
+  buttons.forEach(button => {
     button.addEventListener("click", () => {
-        const answer = button.getAttribute("data-answer");
-        scores[answer]++;
-        button.closest(".question-block").querySelectorAll(".answer-btn").forEach(btn => {
-            btn.disabled = true;
-            btn.classList.remove("btn-outline-primary");
-            btn.classList.add("btn-secondary");
-        });
-        button.classList.remove("btn-secondary");
-    button.classList.add("btn-primary");
+      // Remove 'selected' style from other buttons in this block
+      buttons.forEach(btn => btn.classList.remove("btn-primary"));
+      buttons.forEach(btn => btn.classList.add("btn-outline-primary"));
+
+      // Add 'selected' style to clicked button
+      button.classList.remove("btn-outline-primary");
+      button.classList.add("btn-primary");
+
+      // Store the user's selected answer
+      userAnswers[`question-${index + 1}`] = button.getAttribute("data-answer");
+      console.log("Current answers:", userAnswers);
     });
-}));
+  });
+});
 
-// Show result
+// Function to calculate and display the result
+function displayResult() {
+  // Count occurrences of A, P, R, F
+  const counts = { A: 0, P: 0, R: 0, F: 0 };
 
-document.getElementById("show-result").addEventListener("click", () => {
-  const totalAnswered = Object.values(scores).reduce((a, b) => a + b, 0);
-  if (totalAnswered < 5) {
-    alert("Please answer all 5 questions before seeing your result.");
-    return;
-}
+  Object.values(userAnswers).forEach(answer => {
+    if (counts.hasOwnProperty(answer)) {
+      counts[answer]++;
+    }
+  });
 
-  const maxScore = Math.max(...Object.values(scores));
-  const role = Object.keys(scores).find(key => scores[key] === maxScore);
+  console.log("Answer counts:", counts);
 
-  let roleName = "";
-  let roleDesc = "";
+  // Determine the highest-scoring letter
+  const highest = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
 
-  switch (role) {
-    case "A":
-      roleName = "Security Analyst";
-      roleDesc = "You have a sharp eye for detail and a love for solving complex problems. Analysts monitor systems, identify threats, and keep data safe.";
-      break;
-    case "P":
-      roleName = "Security Engineer / Penetration Tester";
-      roleDesc = "You're a builder and problem-solver who loves to test limits. Engineers and pentesters strengthen defenses and find vulnerabilities before attackers do.";
-      break;
-    case "R":
-      roleName = "Incident Responder";
-      roleDesc = "You thrive in high-pressure situations. Responders act fast when security incidents happen, investigating and neutralizing threats.";
-      break;
-    case "F":
-      roleName = "Cybersecurity Policy & Compliance Specialist";
-      roleDesc = "You value structure and integrity. Compliance specialists develop and enforce security policies to ensure organizations stay safe and legal.";
-      break;
-  }
+  // Map letters to cybersecurity roles
+  const roles = {
+    A: {
+      title: "Security Analyst",
+      description:
+        "You have a sharp eye for detail and a passion for defending systems from attacks. Analysts thrive on studying threats, monitoring networks, and ensuring data safety."
+    },
+    P: {
+      title: "Penetration Tester (Ethical Hacker)",
+      description:
+        "You love breaking things to make them stronger. As a Pen Tester, you think like a hacker to expose weaknesses and help organizations stay one step ahead of attackers."
+    },
+    R: {
+      title: "Incident Responder",
+      description:
+        "You stay calm in the storm. As an Incident Responder, you jump into action during security breaches, analyze incidents, and help contain and recover from cyberattacks."
+    },
+    F: {
+      title: "Digital Forensic Investigator",
+      description:
+        "You're methodical, logical, and curious. As a Forensic Investigator, you collect and analyze digital evidence to uncover what really happened after a cybercrime."
+    }
+  };
 
   const resultContainer = document.getElementById("result-container");
-  document.getElementById("result-text").innerHTML = `<strong>${roleName}</strong><br>${roleDesc}`;
-  resultContainer.style.display = "block";
+  const resultText = document.getElementById("result-text");
 
-});
+  // Handle case where not all questions are answered
+  if (Object.keys(userAnswers).length < 5) {
+    resultText.textContent = "Please answer all questions before viewing your result.";
+    resultContainer.style.display = "block";
+    return;
+  }
+
+  // Display result
+  const role = roles[highest];
+  resultText.innerHTML = `<strong>${role.title}</strong><br>${role.description}`;
+  resultContainer.style.display = "block";
+}
+
+// Attach event listener to the “Show Results” button
+document.getElementById("show-result").addEventListener("click", displayResult);
