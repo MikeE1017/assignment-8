@@ -111,3 +111,4 @@ function resetQuiz() {
 document.getElementById("reset-quiz").addEventListener("click", resetQuiz);
 // Attach event listener to the “Show Results” button
 document.getElementById("show-result").addEventListener("click", displayResult);
+
