@@ -32,9 +32,12 @@ function displayResult() {
   // Count occurrences of A, P, R, F
   const counts = { A: 0, P: 0, R: 0, F: 0 };
 
+  
+
   Object.values(userAnswers).forEach(answer => {
     if (counts.hasOwnProperty(answer)) {
       counts[answer]++;
+      changeTheme(highestRole);
     }
   });
 
@@ -112,3 +115,43 @@ document.getElementById("reset-quiz").addEventListener("click", resetQuiz);
 // Attach event listener to the “Show Results” button
 document.getElementById("show-result").addEventListener("click", displayResult);
 
+function changeTheme(role) {
+  const body = document.body;
+  const card = document.querySelector(".card");
+
+  // Reset any previous colors
+  body.style.background = "";
+  card.style.backgroundColor = "";
+  card.style.color = "";
+
+  switch (role) {
+    case "A": // Analyst
+      body.style.background = "linear-gradient(135deg, #0d47a1, #1976d2)";
+      card.style.backgroundColor = "#1e88e5";
+      card.style.color = "#fff";
+      break;
+
+    case "P": // Pen Tester
+      body.style.background = "linear-gradient(135deg, #b71c1c, #e53935)";
+      card.style.backgroundColor = "#c62828";
+      card.style.color = "#fff";
+      break;
+
+    case "R": // Researcher
+      body.style.background = "linear-gradient(135deg, #1b5e20, #43a047)";
+      card.style.backgroundColor = "#2e7d32";
+      card.style.color = "#fff";
+      break;
+
+    case "F": // Forensic Specialist
+      body.style.background = "linear-gradient(135deg, #4a148c, #7b1fa2)";
+      card.style.backgroundColor = "#6a1b9a";
+      card.style.color = "#fff";
+      break;
+
+    default:
+      body.style.background = "linear-gradient(135deg, #0a0f24, #1b2a49)";
+      card.style.backgroundColor = "#2c3e50";
+      card.style.color = "#f8f9fa";
+  }
+}
