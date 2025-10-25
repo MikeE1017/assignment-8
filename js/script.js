@@ -29,7 +29,7 @@ questionBlocks.forEach((block, index) => {
 
 // Function to calculate and display the result
 function displayResult() {
-  // Count occurrences of A, P, R, F
+      // Count occurrences of A, P, R, F
   const counts = { A: 0, P: 0, R: 0, F: 0 };
 
   
@@ -37,7 +37,6 @@ function displayResult() {
   Object.values(userAnswers).forEach(answer => {
     if (counts.hasOwnProperty(answer)) {
       counts[answer]++;
-      changeTheme(highestRole);
     }
   });
 
@@ -84,6 +83,9 @@ function displayResult() {
   const role = roles[highest];
   resultText.innerHTML = `<strong>${role.title}</strong><br>${role.description}`;
   resultContainer.style.display = "block";
+
+  // Change background theme based on result
+  changeTheme(highestRole);
   }
 
   // Reset quiz function
