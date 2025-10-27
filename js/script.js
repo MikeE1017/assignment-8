@@ -84,9 +84,7 @@ function displayResult() {
   resultText.innerHTML = `<strong>${role.title}</strong><br>${role.description}`;
   resultContainer.style.display = "block";
 
-  // Change background theme based on result
-  changeTheme(highest);
-  }
+  
 
   // Reset quiz function
 function resetQuiz() {
