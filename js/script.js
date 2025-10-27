@@ -109,6 +109,9 @@ function resetQuiz() {
   resultText.textContent = "";
   resultContainer.style.display = "none";
 
+  // Reset background theme
+  document.body.style.background = "";
+
   console.log("Quiz reset complete.");
 }
 
