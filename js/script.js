@@ -85,7 +85,7 @@ function displayResult() {
   resultContainer.style.display = "block";
 
   // Change background theme based on result
-  changeTheme(highestRole);
+  changeTheme(highest);
   }
 
   // Reset quiz function
