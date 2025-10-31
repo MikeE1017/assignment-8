@@ -29,10 +29,8 @@ questionBlocks.forEach((block, index) => {
 
 // Function to calculate and display the result
 function displayResult() {
-      // Count occurrences of A, P, R, F
+  // Count occurrences of A, P, R, F
   const counts = { A: 0, P: 0, R: 0, F: 0 };
-
-  
 
   Object.values(userAnswers).forEach(answer => {
     if (counts.hasOwnProperty(answer)) {
@@ -43,7 +41,9 @@ function displayResult() {
   console.log("Answer counts:", counts);
 
   // Determine the highest-scoring letter
-  const highest = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+  const highest = Object.keys(counts).reduce((a, b) =>
+    counts[a] > counts[b] ? a : b
+  );
 
   // Map letters to cybersecurity roles
   const roles = {
@@ -74,7 +74,8 @@ function displayResult() {
 
   // Handle case where not all questions are answered
   if (Object.keys(userAnswers).length < 5) {
-    resultText.textContent = "Please answer all questions before viewing your result.";
+    resultText.textContent =
+      "Please answer all questions before viewing your result.";
     resultContainer.style.display = "block";
     return;
   }
@@ -83,10 +84,9 @@ function displayResult() {
   const role = roles[highest];
   resultText.innerHTML = `<strong>${role.title}</strong><br>${role.description}`;
   resultContainer.style.display = "block";
+}
 
-  
-
-  // Reset quiz function
+// Reset quiz function (now outside displayResult)
 function resetQuiz() {
   // Clear stored answers
   for (let key in userAnswers) {
@@ -107,13 +107,10 @@ function resetQuiz() {
   resultText.textContent = "";
   resultContainer.style.display = "none";
 
-  
-
   console.log("Quiz reset complete.");
 }
 
-// Add event listener for Reset button
+// Add event listeners for buttons
 document.getElementById("reset-quiz").addEventListener("click", resetQuiz);
-// Attach event listener to the “Show Results” button
 document.getElementById("show-result").addEventListener("click", displayResult);
 
